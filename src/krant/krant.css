@@ -1,0 +1,206 @@
+/* ── De Dagkrant ── */
+.kr-app {
+  --kr-ink: #1a1714;
+  --kr-text: #33302b;
+  --kr-soft: #6b6660;
+  --kr-muted: #928c84;
+  --kr-paper: #f7f4ec;
+  --kr-panel: #fffdf8;
+  --kr-line: #ddd6c8;
+  --kr-rood: #b3271e;
+  --kr-accent: #1f3a5f;
+  --kr-radius: 6px;
+  --kr-serif: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif;
+  --kr-sans: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  font-family: var(--kr-sans);
+  color: var(--kr-text);
+  background: var(--kr-paper);
+  min-height: 100svh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.kr-app *, .kr-app *::before, .kr-app *::after { box-sizing: border-box; }
+.kr-app h1, .kr-app h2, .kr-app h3 { color: var(--kr-ink); line-height: 1.2; }
+.kr-app button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.kr-app a { color: inherit; }
+
+/* ── Masthead ── */
+.kr-masthead {
+  text-align: center;
+  padding: 1.5rem 1rem 0;
+  border-bottom: 3px double var(--kr-ink);
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.kr-masthead-top {
+  display: flex;
+  justify-content: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--kr-soft);
+  border-bottom: 1px solid var(--kr-line);
+  padding-bottom: 0.5rem;
+}
+
+.kr-titel {
+  font-family: var(--kr-serif);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 8vw, 4.2rem);
+  letter-spacing: -0.02em;
+  margin: 0.6rem 0 0.1rem;
+}
+
+.kr-ondertitel {
+  font-family: var(--kr-serif);
+  font-style: italic;
+  color: var(--kr-soft);
+  margin-bottom: 0.9rem;
+}
+
+.kr-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  border-top: 1px solid var(--kr-line);
+  padding-top: 0.5rem;
+}
+
+.kr-tab {
+  padding: 0.5rem 1.1rem;
+  font-weight: 650;
+  font-size: 0.9rem;
+  color: var(--kr-soft);
+  border-radius: 6px 6px 0 0;
+}
+
+.kr-tab:hover { color: var(--kr-ink); background: rgba(0, 0, 0, 0.03); }
+.kr-tab.active { color: var(--kr-ink); border-bottom: 2px solid var(--kr-rood); }
+
+/* ── Hoofdvlak ── */
+.kr-main { max-width: 1080px; margin: 0 auto; padding: 1.5rem 1rem 2.5rem; }
+
+.kr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.kr-rubriek {
+  background: var(--kr-panel);
+  border: 1px solid var(--kr-line);
+  border-radius: var(--kr-radius);
+  padding: 1.1rem 1.2rem;
+}
+
+.kr-breed { grid-column: 1 / -1; }
+
+.kr-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--kr-rood);
+  border-bottom: 1px solid var(--kr-line);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.kr-rubriek h3 { font-family: var(--kr-serif); font-size: 1.3rem; font-weight: 700; }
+.kr-soft { color: var(--kr-soft); }
+.kr-klein { font-size: 0.82rem; }
+
+/* ── Nieuws & weer ── */
+.kr-nieuwsweer { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start; }
+.kr-weer { display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 120px; }
+.kr-weer-emoji { font-size: 2.6rem; line-height: 1; }
+.kr-weer-temp { font-family: var(--kr-serif); font-size: 2.2rem; font-weight: 700; color: var(--kr-ink); }
+.kr-weer-meta { font-size: 0.82rem; color: var(--kr-soft); }
+.kr-nieuws h3 { font-family: var(--kr-serif); font-size: 1.05rem; margin-bottom: 0.4rem; }
+.kr-nieuws ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.kr-nieuws li { border-bottom: 1px dotted var(--kr-line); padding-bottom: 0.5rem; font-size: 0.92rem; }
+.kr-nieuws a:hover { color: var(--kr-rood); text-decoration: underline; }
+.kr-nieuws-leeg { font-size: 0.88rem; color: var(--kr-soft); }
+.kr-nieuws-leeg a { text-decoration: underline; }
+
+/* ── Land ── */
+.kr-land-kop { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.8rem; }
+.kr-vlag { font-size: 2.6rem; line-height: 1; }
+.kr-kaart { background: #f2f6fa; border: 1px solid var(--kr-line); border-radius: var(--kr-radius); overflow: hidden; }
+
+/* ── Eredivisie ── */
+.kr-eredivisie { display: flex; align-items: center; gap: 1rem; }
+.kr-club-logo { width: 64px; height: 64px; object-fit: contain; flex-shrink: 0; }
+.kr-seizoen { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em; color: var(--kr-soft); text-transform: uppercase; }
+.kr-note { font-size: 0.85rem; color: var(--kr-soft); font-style: italic; }
+
+/* ── Sein ── */
+.kr-sein { display: flex; align-items: center; gap: 1.1rem; }
+.kr-morse { font-family: var(--kr-serif); font-size: 1.6rem; letter-spacing: 0.1em; color: var(--kr-ink); }
+
+/* ── Geschiedenis ── */
+.kr-jaar { font-family: var(--kr-serif); font-size: 1.5rem; font-weight: 700; color: var(--kr-rood); }
+
+/* ── Spaans ── */
+.kr-es { font-family: var(--kr-serif); font-size: 1.7rem; font-weight: 700; color: var(--kr-ink); }
+.kr-nl { font-size: 1rem; color: var(--kr-text); }
+
+/* ── Bridge ── */
+.kr-bridge-hand { display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; font-family: var(--kr-serif); font-size: 1.1rem; margin: 0.5rem 0; }
+.kr-rood { color: var(--kr-rood); }
+.kr-bridge-antwoord { font-size: 1.05rem; margin-top: 0.3rem; }
+
+/* ── Vogel ── */
+.kr-vogel { display: grid; grid-template-columns: 180px 1fr; gap: 1.2rem; align-items: start; }
+.kr-vogel-foto { width: 100%; border-radius: var(--kr-radius); border: 1px solid var(--kr-line); }
+.kr-latijn { font-style: italic; font-weight: 400; font-size: 0.95rem; color: var(--kr-soft); }
+.kr-audio { width: 100%; margin-top: 0.6rem; }
+
+/* ── Oefeningen ── */
+.kr-oefeningen { margin-top: 1.5rem; background: var(--kr-panel); border: 1px solid var(--kr-line); border-radius: var(--kr-radius); padding: 1.5rem 1.3rem; }
+.kr-oef-kop { text-align: center; max-width: 520px; margin: 0 auto 1.2rem; }
+.kr-oef-kop h2 { font-family: var(--kr-serif); font-size: 1.6rem; }
+.kr-oef-kop p { color: var(--kr-soft); font-size: 0.92rem; }
+
+/* QuizRunner-wrapper: km-app resetten naar inline-vlak binnen de krant */
+.kr-quizwrap.km-app { min-height: auto; background: transparent; display: block; }
+
+/* Quiz-inhoud die de oefeningen aanleveren */
+.kr-quiz-uitleg { display: block; margin-top: 0.6rem; font-weight: 500; font-size: 0.95rem; line-height: 1.6; }
+.kr-quiz-foto { display: block; margin-top: 0.7rem; max-width: 260px; width: 100%; border-radius: 8px; }
+.kr-bridge-hand { }
+
+/* ── Archief ── */
+.kr-page-head { max-width: 560px; margin-bottom: 1.2rem; }
+.kr-page-head h2 { font-family: var(--kr-serif); font-size: 1.7rem; }
+.kr-page-head p { color: var(--kr-soft); }
+.kr-archief-lijst { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.6rem; }
+.kr-archief-item {
+  width: 100%; text-align: left; display: flex; flex-direction: column; gap: 0.2rem;
+  background: var(--kr-panel); border: 1px solid var(--kr-line); border-radius: var(--kr-radius); padding: 0.75rem 0.9rem;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.kr-archief-item:hover { border-color: var(--kr-rood); transform: translateY(-1px); }
+.kr-archief-dag { font-weight: 700; color: var(--kr-ink); text-transform: capitalize; }
+.kr-archief-status { font-size: 0.8rem; color: var(--kr-soft); }
+
+.kr-terug { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+.kr-btn-terug { font-weight: 650; color: var(--kr-accent); }
+.kr-btn-terug:hover { text-decoration: underline; }
+.kr-terug-datum { font-family: var(--kr-serif); font-style: italic; color: var(--kr-soft); text-transform: capitalize; }
+
+/* ── Footer ── */
+.kr-footer { text-align: center; padding: 1.5rem; color: var(--kr-soft); font-size: 0.85rem; border-top: 1px solid var(--kr-line); }
+
+/* ── Mobiel ── */
+@media (max-width: 720px) {
+  .kr-grid { grid-template-columns: 1fr; }
+  .kr-vogel { grid-template-columns: 1fr; }
+  .kr-vogel-foto { max-width: 240px; }
+  .kr-nieuwsweer { grid-template-columns: 1fr; gap: 1rem; }
+  .kr-weer { flex-direction: row; gap: 0.8rem; justify-content: flex-start; }
+}

@@ -1,0 +1,108 @@
+/* Module-specifiek: rangen en standen */
+.rg-keuze {
+  max-width: 900px;
+}
+
+.rg-tegel {
+  align-items: flex-start;
+}
+
+.rg-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 26%;
+  color: #fff;
+  font-weight: 750;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+
+.rg-ladder {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  max-width: 680px;
+}
+
+.rg-cluster {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--km-accent);
+  margin: 1rem 0 0.35rem;
+}
+
+.rg-ladder li:first-child .rg-cluster {
+  margin-top: 0;
+}
+
+.rg-rang {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  background: var(--km-panel);
+  border: 1px solid var(--km-line);
+  border-radius: 10px;
+  box-shadow: var(--km-shadow);
+  padding: 0.65rem 0.95rem;
+}
+
+.rg-nr {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--km-accent) 10%, white);
+  color: var(--km-accent) !important;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.rg-insigne {
+  flex-shrink: 0;
+  width: 72px;
+  height: 64px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--km-line);
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.rg-insigne-leeg {
+  visibility: hidden;
+}
+
+.rg-vraaginsigne {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.rg-vraaginsigne img {
+  height: 110px;
+  object-fit: contain;
+  background: var(--km-paper);
+  border: 1px solid var(--km-line);
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.rg-rang strong {
+  color: var(--km-ink);
+}
+
+.rg-rang p {
+  font-size: 0.85rem;
+  color: var(--km-soft);
+}
