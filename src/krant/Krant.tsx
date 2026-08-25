@@ -152,6 +152,25 @@ function Archief({ opDatum }: { opDatum: (d: string) => void }) {
   )
 }
 
+function AuthKnop() {
+  const { syncBeschikbaar, gebruiker, syncStatus, inloggen, uitloggen } = useVoortgang()
+  if (!syncBeschikbaar) return <span className="kr-auth-note">lokaal opgeslagen</span>
+  if (gebruiker) {
+    return (
+      <span className="kr-auth">
+        {gebruiker.foto && <img className="kr-avatar" src={gebruiker.foto} alt="" referrerPolicy="no-referrer" />}
+        <span className="kr-auth-naam">{syncStatus === 'gesynct' ? '✓ ' : ''}{gebruiker.naam ?? 'Ingelogd'}</span>
+        <button type="button" className="kr-auth-knop" onClick={() => uitloggen()}>Uitloggen</button>
+      </span>
+    )
+  }
+  return (
+    <button type="button" className="kr-auth-knop kr-auth-in" onClick={() => inloggen()} disabled={syncStatus === 'bezig'}>
+      Inloggen met Google
+    </button>
+  )
+}
+
 export default function Krant() {
   const vandaag = datumSleutel(new Date())
   const [tab, setTab] = useState<'vandaag' | 'archief'>('vandaag')
@@ -162,6 +181,7 @@ export default function Krant() {
       <header className="kr-masthead">
         <div className="kr-masthead-top">
           <span className="kr-editie">Editie · {langeDatum(vandaag)}</span>
+          <AuthKnop />
         </div>
         <h1 className="kr-titel">De Dagkrant</h1>
         <p className="kr-ondertitel">Elke dag een beetje algemener ontwikkeld</p>
@@ -187,9 +207,23 @@ export default function Krant() {
         )}
       </main>
 
-      <footer className="kr-footer">
-        <p>De Dagkrant — je eigen leerkrant. Voortgang wordt lokaal bewaard{/* later: gesynct via je account */}.</p>
-      </footer>
+      <Footer />
     </div>
+  )
+}
+
+function Footer() {
+  const { syncBeschikbaar, gebruiker } = useVoortgang()
+  return (
+    <footer className="kr-footer">
+      <p>
+        De Dagkrant — je eigen leerkrant.{' '}
+        {gebruiker
+          ? 'Voortgang wordt gesynchroniseerd via je Google-account.'
+          : syncBeschikbaar
+            ? 'Log in om je voortgang op al je apparaten te synchroniseren.'
+            : 'Voortgang wordt lokaal in deze browser bewaard.'}
+      </p>
+    </footer>
   )
 }

@@ -37,7 +37,10 @@
 
 .kr-masthead-top {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -45,6 +48,19 @@
   border-bottom: 1px solid var(--kr-line);
   padding-bottom: 0.5rem;
 }
+
+/* Inloggen / account */
+.kr-auth { display: inline-flex; align-items: center; gap: 0.5rem; }
+.kr-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+.kr-auth-naam { font-weight: 650; color: var(--kr-ink); text-transform: none; letter-spacing: 0; }
+.kr-auth-knop {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--kr-accent); padding: 0.3rem 0.7rem; border: 1px solid var(--kr-line); border-radius: 999px;
+}
+.kr-auth-knop:hover { border-color: var(--kr-accent); }
+.kr-auth-knop:disabled { opacity: 0.5; cursor: default; }
+.kr-auth-in { color: #fff; background: var(--kr-accent); border-color: var(--kr-accent); }
+.kr-auth-note { color: var(--kr-muted); text-transform: none; letter-spacing: 0; font-size: 0.7rem; }
 
 .kr-titel {
   font-family: var(--kr-serif);

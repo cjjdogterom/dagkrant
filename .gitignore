@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Omgevingsvariabelen (Firebase-config)
+.env
+.env.local
