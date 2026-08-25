@@ -23,7 +23,9 @@ function korteDatum(sleutel: string): string {
 }
 
 // Eén editie: rubrieken bovenaan, oefeningen onderaan.
-function EditieView({ datum }: { datum: string }) {
+// `tracked` bepaalt of het resultaat in de voortgang/het archief wordt bewaard
+// (waar bij een losse "nieuwe editie" niet het geval is).
+function EditieView({ datum, tracked = true }: { datum: string; tracked?: boolean }) {
   const editie = useMemo(() => bouwEditie(datum), [datum])
   const { registreer, rondAf } = useVoortgang()
   const [resultaten, setResultaten] = useState<Record<string, boolean>>({})
@@ -33,19 +35,20 @@ function EditieView({ datum }: { datum: string }) {
     setResultaten({})
   }, [datum])
 
-  // Zodra alle rubrieken beantwoord zijn: editie afronden.
+  // Zodra alle rubrieken beantwoord zijn: editie afronden (alleen indien tracked).
   useEffect(() => {
+    if (!tracked) return
     const gedaan = Object.keys(resultaten).length
     if (gedaan >= RUBRIEKEN.length) {
       const goed = Object.values(resultaten).filter(Boolean).length
       rondAf(datum, goed, RUBRIEKEN.length)
     }
-  }, [resultaten, datum, rondAf])
+  }, [resultaten, datum, rondAf, tracked])
 
   function onUitslag(vraag: Vraag, goed: boolean) {
     const rubriek = rubriekVanVraag(vraag)
     if (!rubriek) return
-    registreer(datum, rubriek, goed)
+    if (tracked) registreer(datum, rubriek, goed)
     setResultaten((r) => (rubriek in r ? r : { ...r, [rubriek]: goed }))
   }
 
@@ -180,6 +183,12 @@ export default function Krant() {
   const vandaag = datumSleutel(new Date())
   const [tab, setTab] = useState<'vandaag' | 'archief'>('vandaag')
   const [archiefDatum, setArchiefDatum] = useState<string | null>(null)
+  const [extraSeed, setExtraSeed] = useState<string | null>(null)
+
+  function nieuweEditie() {
+    setExtraSeed(`extra-${Date.now()}-${Math.floor(Math.random() * 1_000_000)}`)
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <div className="kr-app">
@@ -191,13 +200,28 @@ export default function Krant() {
         <h1 className="kr-titel">De Dagkrant</h1>
         <p className="kr-ondertitel">Elke dag een beetje algemener ontwikkeld</p>
         <nav className="kr-nav">
-          <button type="button" className={`kr-tab${tab === 'vandaag' ? ' active' : ''}`} onClick={() => setTab('vandaag')}>Vandaag</button>
+          <button type="button" className={`kr-tab${tab === 'vandaag' ? ' active' : ''}`} onClick={() => { setTab('vandaag'); setExtraSeed(null) }}>Vandaag</button>
           <button type="button" className={`kr-tab${tab === 'archief' ? ' active' : ''}`} onClick={() => { setTab('archief'); setArchiefDatum(null) }}>Archief</button>
         </nav>
       </header>
 
       <main className="kr-main">
-        {tab === 'vandaag' && <EditieView datum={vandaag} />}
+        {tab === 'vandaag' && (
+          <>
+            <div className="kr-editiebalk">
+              <span className={`kr-extra-badge${extraSeed ? ' extra' : ''}`}>
+                {extraSeed ? 'Extra editie · telt niet mee in je archief' : 'Editie van vandaag'}
+              </span>
+              <div className="kr-editie-acties">
+                {extraSeed && (
+                  <button type="button" className="kr-terug-knop" onClick={() => setExtraSeed(null)}>← Terug naar vandaag</button>
+                )}
+                <button type="button" className="kr-nieuw-knop" onClick={nieuweEditie}>🎲 Nieuwe editie</button>
+              </div>
+            </div>
+            <EditieView key={extraSeed ?? vandaag} datum={extraSeed ?? vandaag} tracked={extraSeed === null} />
+          </>
+        )}
 
         {tab === 'archief' && archiefDatum === null && <Archief opDatum={setArchiefDatum} />}
 

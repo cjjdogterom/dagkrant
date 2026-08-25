@@ -99,6 +99,16 @@
 /* ── Hoofdvlak ── */
 .kr-main { max-width: 1080px; margin: 0 auto; padding: 1.5rem 1rem 2.5rem; }
 
+/* ── Editiebalk (nieuwe editie) ── */
+.kr-editiebalk { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.kr-extra-badge { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--kr-soft); }
+.kr-extra-badge.extra { color: var(--kr-rood); }
+.kr-editie-acties { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.kr-nieuw-knop { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 999px; background: var(--kr-accent); color: #fff; font-weight: 700; font-size: 0.85rem; }
+.kr-nieuw-knop:hover { background: color-mix(in srgb, var(--kr-accent) 85%, black); }
+.kr-terug-knop { padding: 0.5rem 0.9rem; border-radius: 999px; border: 1px solid var(--kr-line); font-weight: 650; font-size: 0.85rem; color: var(--kr-ink); }
+.kr-terug-knop:hover { border-color: var(--kr-accent); color: var(--kr-accent); }
+
 .kr-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
