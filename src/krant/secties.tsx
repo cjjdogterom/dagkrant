@@ -124,13 +124,28 @@ export function GeschiedenisSectie({ hist }: { hist: Editie['hist'] }) {
   )
 }
 
-// ── Spaans ──
-export function SpaansSectie({ woord }: { woord: Editie['woord'] }) {
+// ── Spaanse zin ──
+export function SpaansSectie({ zin }: { zin: Editie['zin'] }) {
   return (
     <div className="kr-spaans">
-      <p className="kr-es">{woord.es}</p>
-      <p className="kr-nl">{woord.nl}</p>
-      <p className="kr-soft kr-klein">Thema: {woord.thema}</p>
+      <p className="kr-es" lang="es">{zin.es}</p>
+      <p className="kr-nl">{zin.nl}</p>
+      <p className="kr-soft kr-klein">Thema: {zin.thema}</p>
+    </div>
+  )
+}
+
+// ── Flora van de dag ──
+export function FloraSectie({ plant }: { plant: Editie['plant'] }) {
+  return (
+    <div className="kr-flora">
+      <span className="kr-flora-emoji">{plant.emoji}</span>
+      <div>
+        <h3>{plant.naam} <span className="kr-latijn">{plant.latijn}</span></h3>
+        <p className="kr-soft kr-klein">{plant.type}{plant.bloei && plant.bloei !== '—' ? ` · bloei: ${plant.bloei}` : ''}</p>
+        <p>{plant.beschrijving}</p>
+        <p className="kr-soft"><strong>Bijzonder:</strong> {plant.kenmerk}</p>
+      </div>
     </div>
   )
 }

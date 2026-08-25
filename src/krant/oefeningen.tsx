@@ -1,7 +1,9 @@
 import type { Vraag } from '../leer/QuizRunner'
 import { shuffle } from '../leer/match'
+import { FLORA } from '../flora/data'
 import { ALLES } from '../geschiedenis/data'
 import { SEINEN } from '../seinen/data'
+import { ZINNEN } from '../spaans/zinnen'
 import { eredivisie } from '../voetbal/data/datasets/eredivisie'
 import { VOGELS } from '../vogels/data'
 import { WEETJES } from '../weetjes/data'
@@ -78,15 +80,16 @@ export function bouwVragen(editie: Editie): Vraag[] {
     })
   }
 
-  // ── Spaans → typen ──
+  // ── Spaanse zin → Nederlandse vertaling ──
   {
-    const w = editie.woord
+    const z = editie.zin
+    const opties = shuffle([z.nl, ...anderen(ZINNEN.map((x) => x.nl), z.nl, 3)])
     vragen.push({
       id: `${d}:spaans`,
-      prompt: <>Hoe zeg je <strong>{w.nl}</strong> in het Spaans?</>,
-      accepted: [w.es, ...(w.alt ?? [])],
-      antwoordLabel: 'Spaans',
-      explain: `${w.nl} = ${w.es}`,
+      prompt: <>Wat betekent: <strong lang="es">{z.es}</strong>?</>,
+      options: opties,
+      correct: opties.indexOf(z.nl),
+      explain: `${z.es} — ${z.nl}`,
     })
   }
 
@@ -146,6 +149,24 @@ export function bouwVragen(editie: Editie): Vraag[] {
       options: opties,
       correct: opties.indexOf(v.naam),
       explain: `${v.naam} (${v.latijn}). ${v.geluid}`,
+    })
+  }
+
+  // ── Flora → herken op beschrijving ──
+  {
+    const p = editie.plant
+    const opties = shuffle([p.naam, ...anderen(FLORA.map((x) => x.naam), p.naam, 3)])
+    vragen.push({
+      id: `${d}:flora`,
+      prompt: (
+        <>
+          Welke {p.type.toLowerCase()} wordt hier beschreven?
+          <span className="kr-quiz-uitleg">{p.beschrijving}</span>
+        </>
+      ),
+      options: opties,
+      correct: opties.indexOf(p.naam),
+      explain: `${p.naam} (${p.latijn}). ${p.kenmerk}`,
     })
   }
 

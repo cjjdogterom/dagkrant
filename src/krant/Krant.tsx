@@ -4,7 +4,7 @@ import { bouwEditie, RUBRIEKEN } from './editie'
 import { bouwVragen, rubriekVanVraag } from './oefeningen'
 import { datumSleutel, parseDatum } from './rng'
 import {
-  BridgeSectie, EredivisieSectie, GeschiedenisSectie, LandSectie,
+  BridgeSectie, EredivisieSectie, FloraSectie, GeschiedenisSectie, LandSectie,
   NieuwsWeer, SeinSectie, SpaansSectie, VogelSectie, WeetjeSectie,
 } from './secties'
 import { useVoortgang } from './store'
@@ -78,8 +78,8 @@ function EditieView({ datum }: { datum: string }) {
         </section>
 
         <section className="kr-rubriek">
-          <span className="kr-label">Spaans</span>
-          <SpaansSectie woord={editie.woord} />
+          <span className="kr-label">Spaanse zin</span>
+          <SpaansSectie zin={editie.zin} />
         </section>
 
         <section className="kr-rubriek">
@@ -95,6 +95,11 @@ function EditieView({ datum }: { datum: string }) {
         <section className="kr-rubriek kr-breed">
           <span className="kr-label">Vogel van de dag</span>
           <VogelSectie vogel={editie.vogel} />
+        </section>
+
+        <section className="kr-rubriek kr-breed">
+          <span className="kr-label">Flora van de dag</span>
+          <FloraSectie plant={editie.plant} />
         </section>
       </div>
 

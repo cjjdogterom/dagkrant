@@ -1,7 +1,8 @@
 import { ANTWOORD_SCENARIOS, type AntwoordScenario } from '../bridge/antwoorden'
+import { FLORA, type Plant } from '../flora/data'
 import { ALLES, type HistItem } from '../geschiedenis/data'
 import { SEINEN, type Sein } from '../seinen/data'
-import { ALLE_WOORDEN, type Woord } from '../spaans/woorden'
+import { ZINNEN, type Zin } from '../spaans/zinnen'
 import { eredivisie } from '../voetbal/data/datasets/eredivisie'
 import type { Champion } from '../voetbal/types'
 import { VOGELS, type Vogel } from '../vogels/data'
@@ -12,18 +13,17 @@ import { kiesVoor } from './rng'
 // Alleen seizoenen met een echte kampioen.
 const KAMPIOENEN: Champion[] = eredivisie.champions.filter((c) => c.winner)
 
-export type SpaansWoord = Woord & { thema: string }
-
 export type Editie = {
   datum: string
   land: Land
   kampioen: Champion
   sein: Sein
   hist: HistItem
-  woord: SpaansWoord
+  zin: Zin
   bridge: AntwoordScenario
   weetje: Weetje
   vogel: Vogel
+  plant: Plant
 }
 
 export function bouwEditie(datum: string): Editie {
@@ -33,10 +33,11 @@ export function bouwEditie(datum: string): Editie {
     kampioen: kiesVoor(datum, 'eredivisie', KAMPIOENEN),
     sein: kiesVoor(datum, 'sein', SEINEN),
     hist: kiesVoor(datum, 'geschiedenis', ALLES),
-    woord: kiesVoor(datum, 'spaans', ALLE_WOORDEN),
+    zin: kiesVoor(datum, 'spaans', ZINNEN),
     bridge: kiesVoor(datum, 'bridge', ANTWOORD_SCENARIOS),
     weetje: kiesVoor(datum, 'weetje', WEETJES),
     vogel: kiesVoor(datum, 'vogel', VOGELS),
+    plant: kiesVoor(datum, 'flora', FLORA),
   }
 }
 
@@ -46,8 +47,9 @@ export const RUBRIEKEN = [
   { id: 'eredivisie', label: 'Eredivisie' },
   { id: 'sein', label: 'Seinvlag & morse' },
   { id: 'geschiedenis', label: 'Vaderlandse geschiedenis' },
-  { id: 'spaans', label: 'Spaans' },
+  { id: 'spaans', label: 'Spaanse zin' },
   { id: 'bridge', label: 'Bridge' },
   { id: 'weetje', label: 'Weetje' },
   { id: 'vogel', label: 'Vogel' },
+  { id: 'flora', label: 'Flora' },
 ] as const

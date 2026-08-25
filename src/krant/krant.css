@@ -176,6 +176,10 @@
 .kr-latijn { font-style: italic; font-weight: 400; font-size: 0.95rem; color: var(--kr-soft); }
 .kr-audio { width: 100%; margin-top: 0.6rem; }
 
+/* ── Flora ── */
+.kr-flora { display: flex; align-items: flex-start; gap: 1rem; }
+.kr-flora-emoji { font-size: 2.6rem; line-height: 1; flex-shrink: 0; }
+
 /* ── Oefeningen ── */
 .kr-oefeningen { margin-top: 1.5rem; background: var(--kr-panel); border: 1px solid var(--kr-line); border-radius: var(--kr-radius); padding: 1.5rem 1.3rem; }
 .kr-oef-kop { text-align: center; max-width: 520px; margin: 0 auto 1.2rem; }
