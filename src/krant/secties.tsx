@@ -6,6 +6,7 @@ import { vlagEmoji } from './landen'
 import { haalArtikel, haalNieuws, type Artikel, type NieuwsItem } from './nieuws'
 import { VALUTA } from './valuta'
 import { haalWeer, type Weer } from './weer'
+import { haalPlantFoto } from './wikifoto'
 import Wereldkaart from './Wereldkaart'
 
 // ── Nieuws & weer (live) ──
@@ -177,12 +178,25 @@ export function SpaansSectie({ zin }: { zin: Editie['zin'] }) {
   )
 }
 
+// Plantfoto van Wikipedia, met emoji als terugval tijdens laden / bij geen foto.
+function FloraFoto({ latijn, naam, emoji }: { latijn: string; naam: string; emoji: string }) {
+  const [foto, setFoto] = useState<string | null>(null)
+  useEffect(() => {
+    let leeft = true
+    setFoto(null)
+    haalPlantFoto(latijn, naam).then((u) => { if (leeft) setFoto(u) })
+    return () => { leeft = false }
+  }, [latijn, naam])
+  if (foto) return <img className="kr-flora-foto" src={foto} alt={naam} loading="lazy" />
+  return <span className="kr-flora-emoji" aria-hidden="true">{emoji}</span>
+}
+
 // ── Flora van de dag ──
 export function FloraSectie({ plant }: { plant: Editie['plant'] }) {
   return (
     <div className="kr-flora">
-      <span className="kr-flora-emoji">{plant.emoji}</span>
-      <div>
+      <FloraFoto latijn={plant.latijn} naam={plant.naam} emoji={plant.emoji} />
+      <div className="kr-flora-info">
         <h3>{plant.naam} <span className="kr-latijn">{plant.latijn}</span></h3>
         <p className="kr-soft kr-klein">{plant.type}{plant.bloei && plant.bloei !== '—' ? ` · bloei: ${plant.bloei}` : ''}</p>
         <p>{plant.beschrijving}</p>
