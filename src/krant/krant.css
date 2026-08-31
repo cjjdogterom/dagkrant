@@ -124,17 +124,25 @@
 
 .kr-breed { grid-column: 1 / -1; }
 
+.kr-rubriek-kop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--kr-line);
+  padding-bottom: 0.45rem;
+  margin-bottom: 0.85rem;
+}
 .kr-label {
-  display: block;
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--kr-rood);
-  border-bottom: 1px solid var(--kr-line);
-  padding-bottom: 0.4rem;
-  margin-bottom: 0.8rem;
 }
+.kr-beheers { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.72rem; font-weight: 650; color: var(--kr-soft); cursor: pointer; white-space: nowrap; user-select: none; }
+.kr-beheers input { accent-color: #3a7d44; width: 15px; height: 15px; cursor: pointer; margin: 0; }
+.kr-beheers.aan { color: #3a7d44; }
 
 .kr-rubriek h3 { font-family: var(--kr-serif); font-size: 1.3rem; font-weight: 700; }
 .kr-soft { color: var(--kr-soft); }
@@ -239,6 +247,27 @@
 .kr-btn-terug:hover { text-decoration: underline; }
 .kr-terug-datum { font-family: var(--kr-serif); font-style: italic; color: var(--kr-soft); text-transform: capitalize; }
 
+/* ── Overzicht ── */
+.kr-stat-tegels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 2rem; }
+.kr-tegel { background: var(--kr-panel); border: 1px solid var(--kr-line); border-radius: var(--kr-radius); padding: 1.1rem 1rem; text-align: center; display: flex; flex-direction: column; gap: 0.2rem; }
+.kr-tegel-getal { font-family: var(--kr-serif); font-size: 2rem; font-weight: 700; color: var(--kr-ink); line-height: 1; }
+.kr-tegel-label { font-size: 0.78rem; color: var(--kr-soft); }
+.kr-ovz-kop { font-family: var(--kr-serif); font-size: 1.25rem; margin: 1.5rem 0 0.8rem; }
+.kr-ovz-kop span { font-family: var(--kr-sans); font-size: 0.8rem; font-weight: 500; color: var(--kr-muted); }
+.kr-rubriek-scores { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+.kr-rubriek-scores li { display: grid; grid-template-columns: 180px 1fr 90px; align-items: center; gap: 0.85rem; }
+.kr-rs-label { font-weight: 600; color: var(--kr-ink); font-size: 0.9rem; }
+.kr-rs-balk { height: 9px; background: var(--kr-line); border-radius: 999px; overflow: hidden; }
+.kr-rs-vul { display: block; height: 100%; border-radius: 999px; }
+.kr-rs-cijfer { font-size: 0.85rem; font-weight: 700; color: var(--kr-ink); text-align: right; font-variant-numeric: tabular-nums; }
+.kr-rs-cijfer small { font-weight: 500; color: var(--kr-muted); }
+.kr-zwak-lijst { list-style: none; display: flex; flex-direction: column; }
+.kr-zwak-lijst li { display: grid; grid-template-columns: 140px 1fr auto; align-items: baseline; gap: 0.85rem; padding: 0.6rem 0; border-bottom: 1px solid var(--kr-line); }
+.kr-zwak-lijst li:last-child { border-bottom: none; }
+.kr-zwak-rubriek { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--kr-soft); }
+.kr-zwak-item { color: var(--kr-ink); font-size: 0.92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kr-zwak-score { font-size: 0.82rem; font-weight: 700; color: var(--kr-rood); white-space: nowrap; }
+
 /* ── Footer ── */
 .kr-footer { text-align: center; padding: 1.5rem; color: var(--kr-soft); font-size: 0.85rem; border-top: 1px solid var(--kr-line); }
 
@@ -250,4 +279,8 @@
   .kr-nieuwsweer { grid-template-columns: 1fr; gap: 1rem; }
   .kr-weer { flex-direction: row; align-items: baseline; gap: 0.8rem; justify-content: flex-start; border-right: none; padding-right: 0; padding-bottom: 0.8rem; border-bottom: 1px solid var(--kr-line); }
   .kr-lezer { padding: 1.75rem 1.25rem 1.25rem; }
+  .kr-rubriek-scores li { grid-template-columns: 96px 1fr 52px; gap: 0.5rem; }
+  .kr-rs-label { font-size: 0.8rem; }
+  .kr-zwak-lijst li { grid-template-columns: 1fr auto; }
+  .kr-zwak-rubriek { display: none; }
 }

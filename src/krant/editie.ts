@@ -53,3 +53,22 @@ export const RUBRIEKEN = [
   { id: 'vogel', label: 'Vogel' },
   { id: 'flora', label: 'Flora' },
 ] as const
+
+export const RUBRIEK_LABEL: Record<string, string> = Object.fromEntries(RUBRIEKEN.map((r) => [r.id, r.label]))
+
+// Stabiele identiteit van het item in een rubriek (los van de datum), zodat
+// beheersing en fout/goed-statistiek per feit over dagen heen bijgehouden worden.
+export function itemIdVoor(rubriek: string, e: Editie): string {
+  switch (rubriek) {
+    case 'land': return `land:${e.land.iso2}`
+    case 'eredivisie': return `eredivisie:${e.kampioen.season}`
+    case 'sein': return `sein:${e.sein.letter}`
+    case 'geschiedenis': return `geschiedenis:${ALLES.indexOf(e.hist)}`
+    case 'spaans': return `spaans:${ZINNEN.indexOf(e.zin)}`
+    case 'bridge': return `bridge:${ANTWOORD_SCENARIOS.indexOf(e.bridge)}`
+    case 'weetje': return `weetje:${e.weetje.id}`
+    case 'vogel': return `vogel:${e.vogel.id}`
+    case 'flora': return `flora:${FLORA.indexOf(e.plant)}`
+    default: return `${rubriek}:?`
+  }
+}
