@@ -7,9 +7,9 @@
   --kr-paper: #f7f4ec;
   --kr-panel: #fffdf8;
   --kr-line: #ddd6c8;
-  --kr-rood: #b3271e;
+  --kr-rood: #a8261f;
   --kr-accent: #1f3a5f;
-  --kr-radius: 6px;
+  --kr-radius: 4px;
   --kr-serif: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif;
   --kr-sans: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
@@ -141,22 +141,38 @@
 .kr-klein { font-size: 0.82rem; }
 
 /* ── Nieuws & weer ── */
-.kr-nieuwsweer { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: start; }
-.kr-weer { display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 120px; }
-.kr-weer-emoji { font-size: 2.6rem; line-height: 1; }
-.kr-weer-temp { font-family: var(--kr-serif); font-size: 2.2rem; font-weight: 700; color: var(--kr-ink); }
-.kr-weer-meta { font-size: 0.82rem; color: var(--kr-soft); }
-.kr-nieuws h3 { font-family: var(--kr-serif); font-size: 1.05rem; margin-bottom: 0.4rem; }
-.kr-nieuws ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-.kr-nieuws li { border-bottom: 1px dotted var(--kr-line); padding-bottom: 0.5rem; font-size: 0.92rem; }
-.kr-nieuws a:hover { color: var(--kr-rood); text-decoration: underline; }
+.kr-nieuwsweer { display: grid; grid-template-columns: 130px 1fr; gap: 1.75rem; align-items: start; }
+.kr-weer { display: flex; flex-direction: column; gap: 0.15rem; padding-right: 1.25rem; border-right: 1px solid var(--kr-line); }
+.kr-weer-temp { font-family: var(--kr-serif); font-size: 2.6rem; font-weight: 700; color: var(--kr-ink); line-height: 1; }
+.kr-weer-meta { font-size: 0.8rem; color: var(--kr-soft); line-height: 1.45; }
+.kr-nieuws h3 { font-family: var(--kr-serif); font-size: 1.15rem; margin-bottom: 0.5rem; }
+.kr-koppen { list-style: none; display: flex; flex-direction: column; }
+.kr-koppen li { border-bottom: 1px solid var(--kr-line); }
+.kr-koppen li:last-child { border-bottom: none; }
+.kr-kop { display: block; width: 100%; text-align: left; padding: 0.55rem 0; font-size: 0.95rem; font-weight: 600; color: var(--kr-ink); line-height: 1.4; }
+.kr-kop:hover { color: var(--kr-rood); }
 .kr-nieuws-leeg { font-size: 0.88rem; color: var(--kr-soft); }
 .kr-nieuws-leeg a { text-decoration: underline; }
 
+/* ── Artikellezer ── */
+.kr-lezer-overlay { position: fixed; inset: 0; background: rgba(20, 18, 15, 0.55); display: flex; align-items: flex-start; justify-content: center; padding: 4vh 1rem; z-index: 100; overflow-y: auto; }
+.kr-lezer { position: relative; background: var(--kr-panel); border: 1px solid var(--kr-line); border-radius: 6px; max-width: 680px; width: 100%; padding: 2.25rem 2.25rem 1.75rem; box-shadow: 0 24px 70px -24px rgba(0, 0, 0, 0.45); }
+.kr-lezer-sluit { position: absolute; top: 0.5rem; right: 0.85rem; font-size: 1.7rem; line-height: 1; color: var(--kr-soft); }
+.kr-lezer-sluit:hover { color: var(--kr-ink); }
+.kr-lezer-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--kr-rood); margin-bottom: 0.4rem; }
+.kr-lezer h2 { font-family: var(--kr-serif); font-size: 1.95rem; line-height: 1.22; margin-bottom: 1rem; }
+.kr-lezer-body p { margin-bottom: 0.9rem; line-height: 1.75; color: var(--kr-text); }
+.kr-lezer-intro { font-weight: 600; color: var(--kr-ink) !important; }
+.kr-lezer-bron { display: inline-block; margin-top: 0.5rem; font-weight: 650; color: var(--kr-accent); }
+.kr-lezer-bron:hover { text-decoration: underline; }
+
 /* ── Land ── */
-.kr-land-kop { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.8rem; }
-.kr-vlag { font-size: 2.6rem; line-height: 1; }
-.kr-kaart { background: #f2f6fa; border: 1px solid var(--kr-line); border-radius: var(--kr-radius); overflow: hidden; }
+.kr-land-kop { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.9rem; }
+.kr-vlag { font-size: 1.9rem; line-height: 1.1; flex-shrink: 0; }
+.kr-land-feiten { display: grid; grid-template-columns: auto 1fr; gap: 0.15rem 0.8rem; margin-top: 0.3rem; }
+.kr-land-feiten dt { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--kr-soft); padding-top: 0.14rem; }
+.kr-land-feiten dd { color: var(--kr-ink); font-weight: 600; }
+.kr-kaart { background: #eef2f6; border: 1px solid var(--kr-line); border-radius: var(--kr-radius); overflow: hidden; }
 
 /* ── Eredivisie ── */
 .kr-eredivisie { display: flex; align-items: center; gap: 1rem; }
@@ -187,8 +203,8 @@
 .kr-audio { width: 100%; margin-top: 0.6rem; }
 
 /* ── Flora ── */
-.kr-flora { display: flex; align-items: flex-start; gap: 1rem; }
-.kr-flora-emoji { font-size: 2.6rem; line-height: 1; flex-shrink: 0; }
+.kr-flora { display: flex; align-items: flex-start; gap: 0.85rem; }
+.kr-flora-emoji { font-size: 1.7rem; line-height: 1.1; flex-shrink: 0; }
 
 /* ── Oefeningen ── */
 .kr-oefeningen { margin-top: 1.5rem; background: var(--kr-panel); border: 1px solid var(--kr-line); border-radius: var(--kr-radius); padding: 1.5rem 1.3rem; }
@@ -232,5 +248,6 @@
   .kr-vogel { grid-template-columns: 1fr; }
   .kr-vogel-foto { max-width: 240px; }
   .kr-nieuwsweer { grid-template-columns: 1fr; gap: 1rem; }
-  .kr-weer { flex-direction: row; gap: 0.8rem; justify-content: flex-start; }
+  .kr-weer { flex-direction: row; align-items: baseline; gap: 0.8rem; justify-content: flex-start; border-right: none; padding-right: 0; padding-bottom: 0.8rem; border-bottom: 1px solid var(--kr-line); }
+  .kr-lezer { padding: 1.75rem 1.25rem 1.25rem; }
 }

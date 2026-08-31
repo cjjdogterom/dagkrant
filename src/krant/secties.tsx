@@ -3,7 +3,8 @@ import SeinVlag from '../seinen/Vlag'
 import { clubLogoPaths } from '../voetbal/data/clubLogos'
 import type { Editie } from './editie'
 import { vlagEmoji } from './landen'
-import { haalNieuws, type NieuwsItem } from './nieuws'
+import { haalArtikel, haalNieuws, type Artikel, type NieuwsItem } from './nieuws'
+import { VALUTA } from './valuta'
 import { haalWeer, type Weer } from './weer'
 import Wereldkaart from './Wereldkaart'
 
@@ -12,6 +13,9 @@ export function NieuwsWeer() {
   const [weer, setWeer] = useState<Weer | null>(null)
   const [nieuws, setNieuws] = useState<NieuwsItem[] | null>(null)
   const [bezig, setBezig] = useState(true)
+  const [open, setOpen] = useState<NieuwsItem | null>(null)
+  const [artikel, setArtikel] = useState<Artikel | null>(null)
+  const [laadArtikel, setLaadArtikel] = useState(false)
 
   useEffect(() => {
     let leeft = true
@@ -26,17 +30,28 @@ export function NieuwsWeer() {
     }
   }, [])
 
+  function openArtikel(item: NieuwsItem) {
+    setOpen(item)
+    setArtikel(null)
+    setLaadArtikel(true)
+    haalArtikel(item.link).then((a) => {
+      setArtikel(a)
+      setLaadArtikel(false)
+    })
+  }
+
+  const leeg = !artikel || (artikel.alineas.length === 0 && !artikel.samenvatting)
+
   return (
     <div className="kr-nieuwsweer">
       <div className="kr-weer">
         {weer ? (
           <>
-            <span className="kr-weer-emoji">{weer.emoji}</span>
             <span className="kr-weer-temp">{weer.temp}°</span>
             <span className="kr-weer-meta">
-              {weer.omschrijving} · {weer.plaats}
+              {weer.omschrijving}
               <br />
-              wind {weer.wind} km/u
+              {weer.plaats} · wind {weer.wind} km/u
             </span>
           </>
         ) : (
@@ -47,34 +62,61 @@ export function NieuwsWeer() {
       <div className="kr-nieuws">
         <h3>Nieuws van nu</h3>
         {nieuws && nieuws.length > 0 ? (
-          <ul>
+          <ul className="kr-koppen">
             {nieuws.map((n) => (
               <li key={n.link}>
-                <a href={n.link} target="_blank" rel="noopener noreferrer">{n.titel}</a>
+                <button type="button" className="kr-kop" onClick={() => openArtikel(n)}>{n.titel}</button>
               </li>
             ))}
           </ul>
         ) : (
           <p className="kr-nieuws-leeg">
             {bezig ? 'Koppen laden…' : (
-              <>Live koppen verschijnen op de gepubliceerde site. Kijk anders op <a href="https://nos.nl" target="_blank" rel="noopener noreferrer">nos.nl</a>.</>
+              <>Live nieuws verschijnt op de gepubliceerde site. Kijk anders op <a href="https://nos.nl" target="_blank" rel="noopener noreferrer">nos.nl</a>.</>
             )}
           </p>
         )}
       </div>
+
+      {open && (
+        <div className="kr-lezer-overlay" role="dialog" aria-modal="true" onClick={() => setOpen(null)}>
+          <article className="kr-lezer" onClick={(e) => e.stopPropagation()}>
+            <button type="button" className="kr-lezer-sluit" onClick={() => setOpen(null)} aria-label="Sluiten">×</button>
+            <p className="kr-lezer-label">Nieuws · NOS</p>
+            <h2>{(artikel && artikel.titel) || open.titel}</h2>
+            {laadArtikel && <p className="kr-soft">Artikel laden…</p>}
+            {!laadArtikel && !leeg && artikel && (
+              <div className="kr-lezer-body">
+                {artikel.samenvatting && <p className="kr-lezer-intro">{artikel.samenvatting}</p>}
+                {artikel.alineas.map((p, i) => <p key={i}>{p}</p>)}
+              </div>
+            )}
+            {!laadArtikel && leeg && (
+              <p className="kr-soft">Het volledige artikel kon niet worden geladen (werkt alleen op de gepubliceerde site).</p>
+            )}
+            <a className="kr-lezer-bron" href={open.link} target="_blank" rel="noopener noreferrer">Lees op nos.nl →</a>
+          </article>
+        </div>
+      )}
     </div>
   )
 }
 
 // ── Land van de dag ──
 export function LandSectie({ land }: { land: Editie['land'] }) {
+  const v = VALUTA[land.iso2]
+  const munt = v ? `${v.naam}${v.symbool ? ` (${v.symbool})` : ''}` : '—'
   return (
     <div className="kr-land">
       <div className="kr-land-kop">
         <span className="kr-vlag">{vlagEmoji(land.iso2)}</span>
         <div>
           <h3>{land.naam}</h3>
-          <p>Hoofdstad: <strong>{land.hoofdstad}</strong> · {land.werelddeel}</p>
+          <dl className="kr-land-feiten">
+            <dt>Hoofdstad</dt><dd>{land.hoofdstad}</dd>
+            <dt>Werelddeel</dt><dd>{land.werelddeel}</dd>
+            <dt>Munteenheid</dt><dd>{munt}</dd>
+          </dl>
         </div>
       </div>
       <Wereldkaart lat={land.lat} lon={land.lon} />

@@ -216,7 +216,7 @@ export default function Krant() {
                 {extraSeed && (
                   <button type="button" className="kr-terug-knop" onClick={() => setExtraSeed(null)}>← Terug naar vandaag</button>
                 )}
-                <button type="button" className="kr-nieuw-knop" onClick={nieuweEditie}>🎲 Nieuwe editie</button>
+                <button type="button" className="kr-nieuw-knop" onClick={nieuweEditie}>Nieuwe editie</button>
               </div>
             </div>
             <EditieView key={extraSeed ?? vandaag} datum={extraSeed ?? vandaag} tracked={extraSeed === null} />
