@@ -200,9 +200,93 @@
 .kr-nl { font-size: 1rem; color: var(--kr-text); }
 
 /* ── Bridge ── */
-.kr-bridge-hand { display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; font-family: var(--kr-serif); font-size: 1.1rem; margin: 0.5rem 0; }
 .kr-rood { color: var(--kr-rood); }
-.kr-bridge-antwoord { font-size: 1.05rem; margin-top: 0.3rem; }
+.kr-bridge-intro { color: var(--kr-soft); font-size: 0.9rem; margin-bottom: 1rem; }
+
+.kr-bridge-ronde {
+  background: var(--kr-paper);
+  border: 1px solid var(--kr-line);
+  border-radius: var(--kr-radius);
+  padding: 1rem 1.1rem;
+  margin-bottom: 0.75rem;
+}
+.kr-bridge-ronde:last-child { margin-bottom: 0; }
+.kr-bridge-ronde.goed { border-color: #3a7d44; background: #f4faf5; }
+.kr-bridge-ronde.fout { border-color: var(--kr-rood); background: #fdf5f4; }
+
+.kr-bridge-ronde-kop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--kr-line);
+}
+.kr-bridge-nr { font-weight: 800; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--kr-accent); }
+.kr-bridge-opening { font-size: 0.95rem; color: var(--kr-text); }
+.kr-bridge-hcp { margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--kr-soft); background: var(--kr-panel); border: 1px solid var(--kr-line); padding: 0.15rem 0.55rem; border-radius: 999px; }
+
+.kr-bridge-inhoud { display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start; }
+
+/* Kaarthand */
+.kr-hand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: #1a3a2a;
+  color: #fff;
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  min-width: 140px;
+  font-family: var(--kr-serif);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.kr-hand-rij { display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem; }
+.kr-hand-rij.kr-rood { color: #e84040; }
+.kr-suit { font-size: 1.3rem; width: 1.4rem; text-align: center; flex-shrink: 0; }
+.kr-kaarten { letter-spacing: 0.04em; }
+
+/* Biedbox */
+.kr-bridge-bied { display: flex; flex-direction: column; gap: 0.5rem; }
+.kr-bridge-vraag { font-weight: 700; font-size: 1rem; color: var(--kr-ink); }
+.kr-biedbox-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+}
+.kr-bod {
+  padding: 0.35rem 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: 1px solid var(--kr-line);
+  border-radius: 3px;
+  background: var(--kr-panel);
+  color: var(--kr-ink);
+  text-align: center;
+  transition: background 0.1s, border-color 0.1s, transform 0.1s;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.kr-bod:hover:not(:disabled) { background: #e8e4dc; border-color: var(--kr-soft); transform: translateY(-1px); }
+.kr-bod:disabled { opacity: 0.35; cursor: default; }
+.kr-bod .kr-rood { color: var(--kr-rood); }
+.kr-sa { color: var(--kr-accent); font-weight: 800; }
+.kr-biedbox-extra { display: flex; gap: 3px; margin-top: 3px; }
+.kr-bod-pas { flex: 1; background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
+.kr-bod-pas:hover:not(:disabled) { background: #c8e6c9; }
+.kr-bod-dbl { flex: 1; background: #fce4ec; color: #c62828; border-color: #ef9a9a; }
+.kr-bod-dbl:hover:not(:disabled) { background: #f8bbd0; }
+
+/* Resultaat */
+.kr-bridge-resultaat { display: flex; flex-direction: column; justify-content: center; }
+.kr-bridge-feedback { padding: 0.8rem 1rem; border-radius: 6px; }
+.kr-bridge-feedback.goed { background: #e8f5e9; }
+.kr-bridge-feedback.fout { background: #fce4ec; }
+.kr-bridge-verdict { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
+.kr-bridge-feedback.goed .kr-bridge-verdict { color: #2e7d32; }
+.kr-bridge-feedback.fout .kr-bridge-verdict { color: #c62828; }
+.kr-bridge-uitleg { font-size: 0.88rem; color: var(--kr-text); line-height: 1.6; }
 
 /* ── Vogel ── */
 .kr-vogel { display: grid; grid-template-columns: 180px 1fr; gap: 1.2rem; align-items: start; }
@@ -227,7 +311,7 @@
 /* Quiz-inhoud die de oefeningen aanleveren */
 .kr-quiz-uitleg { display: block; margin-top: 0.6rem; font-weight: 500; font-size: 0.95rem; line-height: 1.6; }
 .kr-quiz-foto { display: block; margin-top: 0.7rem; max-width: 260px; width: 100%; border-radius: 8px; }
-.kr-bridge-hand { }
+.kr-bridge-hand { display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; font-family: var(--kr-serif); font-size: 1.1rem; margin: 0.5rem 0; }
 
 /* ── Archief ── */
 .kr-page-head { max-width: 560px; margin-bottom: 1.2rem; }
@@ -296,6 +380,12 @@
   .kr-rs-label { font-size: 0.78rem; }
   .kr-zwak-lijst li { grid-template-columns: 1fr auto; }
   .kr-zwak-rubriek { display: none; }
+  .kr-bridge-inhoud { grid-template-columns: 1fr; gap: 0.85rem; }
+  .kr-hand { flex-direction: row; gap: 0.8rem; min-width: 0; padding: 0.7rem 0.8rem; flex-wrap: wrap; }
+  .kr-hand-rij { font-size: 0.95rem; }
+  .kr-suit { font-size: 1.15rem; width: 1.2rem; }
+  .kr-biedbox-grid { gap: 2px; }
+  .kr-bod { padding: 0.4rem 0.15rem; font-size: 0.78rem; }
   .kr-stat-tegels { gap: 0.5rem; }
   .kr-tegel { padding: 0.85rem 0.5rem; }
   .kr-tegel-getal { font-size: 1.6rem; }

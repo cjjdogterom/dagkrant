@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
+import type { AntwoordScenario } from '../bridge/antwoorden'
 import SeinVlag from '../seinen/Vlag'
 import { clubLogoPaths } from '../voetbal/data/clubLogos'
 import type { Editie } from './editie'
@@ -207,19 +208,119 @@ export function FloraSectie({ plant }: { plant: Editie['plant'] }) {
 }
 
 // ── Bridge ──
+const NIVEAUS = [1, 2, 3, 4, 5, 6, 7] as const
+const KLEUREN = [
+  { sym: '♣', css: '' },
+  { sym: '♦', css: 'kr-rood' },
+  { sym: '♥', css: 'kr-rood' },
+  { sym: '♠', css: '' },
+  { sym: 'SA', css: 'kr-sa' },
+] as const
+
+function BiedBox({ onBied, uitgeschakeld }: { onBied: (bod: string) => void; uitgeschakeld: boolean }) {
+  return (
+    <div className="kr-biedbox">
+      <div className="kr-biedbox-grid">
+        {NIVEAUS.map((n) =>
+          KLEUREN.map((k) => {
+            const bod = `${n}${k.sym}`
+            return (
+              <button
+                key={bod}
+                type="button"
+                className={`kr-bod ${k.css}`}
+                disabled={uitgeschakeld}
+                onClick={() => onBied(bod)}
+              >
+                {n}<span className={k.css}>{k.sym}</span>
+              </button>
+            )
+          }),
+        )}
+      </div>
+      <div className="kr-biedbox-extra">
+        <button type="button" className="kr-bod kr-bod-pas" disabled={uitgeschakeld} onClick={() => onBied('pas')}>Pas</button>
+        <button type="button" className="kr-bod kr-bod-dbl" disabled={uitgeschakeld} onClick={() => onBied('doubleer')}>Doubleer</button>
+      </div>
+    </div>
+  )
+}
+
+function BridgeKaarten({ hand }: { hand: [string, string, string, string] }) {
+  return (
+    <div className="kr-hand">
+      <div className="kr-hand-rij">
+        <span className="kr-suit">♠</span>
+        <span className="kr-kaarten">{hand[0]}</span>
+      </div>
+      <div className="kr-hand-rij kr-rood">
+        <span className="kr-suit">♥</span>
+        <span className="kr-kaarten">{hand[1]}</span>
+      </div>
+      <div className="kr-hand-rij kr-rood">
+        <span className="kr-suit">♦</span>
+        <span className="kr-kaarten">{hand[2]}</span>
+      </div>
+      <div className="kr-hand-rij">
+        <span className="kr-suit">♣</span>
+        <span className="kr-kaarten">{hand[3]}</span>
+      </div>
+    </div>
+  )
+}
+
+function BridgeRonde({ scenario, nummer }: { scenario: AntwoordScenario; nummer: number }) {
+  const [gekozen, setGekozen] = useState<string | null>(null)
+  const juist = scenario.opties[scenario.goed]
+  const isGoed = gekozen === juist
+
+  const bied = useCallback((bod: string) => {
+    if (gekozen) return
+    setGekozen(bod)
+  }, [gekozen])
+
+  return (
+    <div className={`kr-bridge-ronde${gekozen ? (isGoed ? ' goed' : ' fout') : ''}`}>
+      <div className="kr-bridge-ronde-kop">
+        <span className="kr-bridge-nr">Ronde {nummer}</span>
+        <span className="kr-bridge-opening">Partner opent <strong>{scenario.opening}</strong></span>
+        <span className="kr-bridge-hcp">{scenario.hcp} HCP</span>
+      </div>
+
+      <div className="kr-bridge-inhoud">
+        <BridgeKaarten hand={scenario.hand} />
+
+        {!gekozen ? (
+          <div className="kr-bridge-bied">
+            <p className="kr-bridge-vraag">Wat bied jij?</p>
+            <BiedBox onBied={bied} uitgeschakeld={false} />
+          </div>
+        ) : (
+          <div className="kr-bridge-resultaat">
+            <div className={`kr-bridge-feedback ${isGoed ? 'goed' : 'fout'}`}>
+              {isGoed ? (
+                <p className="kr-bridge-verdict">Goed! <strong>{juist}</strong> is het juiste bod.</p>
+              ) : (
+                <p className="kr-bridge-verdict">
+                  Jij bood <strong>{gekozen}</strong> — het juiste bod is <strong>{juist}</strong>.
+                </p>
+              )}
+              <p className="kr-bridge-uitleg">{scenario.uitleg}</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export function BridgeSectie({ bridge }: { bridge: Editie['bridge'] }) {
-  const juist = bridge.opties[bridge.goed]
   return (
     <div className="kr-bridge">
-      <p className="kr-soft">Partner opent <strong>{bridge.opening}</strong> — jij hebt {bridge.hcp} punten:</p>
-      <div className="kr-bridge-hand">
-        <span>♠ {bridge.hand[0]}</span>
-        <span className="kr-rood">♥ {bridge.hand[1]}</span>
-        <span className="kr-rood">♦ {bridge.hand[2]}</span>
-        <span>♣ {bridge.hand[3]}</span>
-      </div>
-      <p className="kr-bridge-antwoord">Bod: <strong>{juist}</strong></p>
-      <p className="kr-soft kr-klein">{bridge.uitleg}</p>
+      <p className="kr-bridge-intro">Drie biedrondes — bekijk je hand, tel je punten en kies het juiste bod.</p>
+      {bridge.map((scenario, i) => (
+        <BridgeRonde key={i} scenario={scenario} nummer={i + 1} />
+      ))}
     </div>
   )
 }

@@ -109,7 +109,7 @@ function itemVanEditie(e: Editie, rubriek: string): unknown {
     case 'sein': return e.sein
     case 'geschiedenis': return e.hist
     case 'spaans': return e.zin
-    case 'bridge': return e.bridge
+    case 'bridge': return e.bridge[0]
     case 'weetje': return e.weetje
     case 'vogel': return e.vogel
     case 'flora': return e.plant

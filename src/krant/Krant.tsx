@@ -107,7 +107,7 @@ function EditieView({ datum, tracked = true }: { datum: string; tracked?: boolea
         <RubriekKaart rubriek="spaans" itemId={ids.spaans} label="Spaanse zin" toonBeheersing={tracked}>
           <SpaansSectie zin={editie.zin} />
         </RubriekKaart>
-        <RubriekKaart rubriek="bridge" itemId={ids.bridge} label="Bridge" toonBeheersing={tracked}>
+        <RubriekKaart rubriek="bridge" itemId={ids.bridge} label="Bridge — biedoefening" breed toonBeheersing={tracked}>
           <BridgeSectie bridge={editie.bridge} />
         </RubriekKaart>
         <RubriekKaart rubriek="weetje" itemId={ids.weetje} label="Weetje van de dag" breed toonBeheersing={tracked}>

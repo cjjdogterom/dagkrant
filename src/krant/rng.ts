@@ -42,6 +42,17 @@ export function kiesVoor<T>(datum: string, rubriek: string, lijst: readonly T[])
   return lijst[Math.floor(rng() * lijst.length)]
 }
 
+// Kies deterministisch N unieke items uit een lijst.
+export function kiesVoorN<T>(datum: string, rubriek: string, lijst: readonly T[], n: number): T[] {
+  const rng = mulberry32(hash(`${datum}::${rubriek}`))
+  const indices = new Set<number>()
+  const max = Math.min(n, lijst.length)
+  while (indices.size < max) {
+    indices.add(Math.floor(rng() * lijst.length))
+  }
+  return [...indices].map((i) => lijst[i])
+}
+
 // Een seeded generator voor een rubriek (voor het opbouwen van oefeningen met
 // stabiele afleiders).
 export function rngVoor(datum: string, rubriek: string): () => number {

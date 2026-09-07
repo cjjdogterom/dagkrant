@@ -8,7 +8,7 @@ import type { Champion } from '../voetbal/types'
 import { VOGELS, type Vogel } from '../vogels/data'
 import { WEETJES, type Weetje } from '../weetjes/data'
 import { LANDEN, type Land } from './landen'
-import { kiesVoor } from './rng'
+import { kiesVoor, kiesVoorN } from './rng'
 
 // Alleen seizoenen met een echte kampioen.
 const KAMPIOENEN: Champion[] = eredivisie.champions.filter((c) => c.winner)
@@ -20,7 +20,7 @@ export type Editie = {
   sein: Sein
   hist: HistItem
   zin: Zin
-  bridge: AntwoordScenario
+  bridge: AntwoordScenario[]
   weetje: Weetje
   vogel: Vogel
   plant: Plant
@@ -34,7 +34,7 @@ export function bouwEditie(datum: string): Editie {
     sein: kiesVoor(datum, 'sein', SEINEN),
     hist: kiesVoor(datum, 'geschiedenis', ALLES),
     zin: kiesVoor(datum, 'spaans', ZINNEN),
-    bridge: kiesVoor(datum, 'bridge', ANTWOORD_SCENARIOS),
+    bridge: kiesVoorN(datum, 'bridge', ANTWOORD_SCENARIOS, 3),
     weetje: kiesVoor(datum, 'weetje', WEETJES),
     vogel: kiesVoor(datum, 'vogel', VOGELS),
     plant: kiesVoor(datum, 'flora', FLORA),
@@ -65,7 +65,7 @@ export function itemIdVoor(rubriek: string, e: Editie): string {
     case 'sein': return `sein:${e.sein.letter}`
     case 'geschiedenis': return `geschiedenis:${ALLES.indexOf(e.hist)}`
     case 'spaans': return `spaans:${ZINNEN.indexOf(e.zin)}`
-    case 'bridge': return `bridge:${ANTWOORD_SCENARIOS.indexOf(e.bridge)}`
+    case 'bridge': return `bridge:${e.bridge.map((b) => ANTWOORD_SCENARIOS.indexOf(b)).join(',')}`
     case 'weetje': return `weetje:${e.weetje.id}`
     case 'vogel': return `vogel:${e.vogel.id}`
     case 'flora': return `flora:${FLORA.indexOf(e.plant)}`
