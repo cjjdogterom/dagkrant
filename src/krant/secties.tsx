@@ -207,63 +207,92 @@ export function FloraSectie({ plant }: { plant: Editie['plant'] }) {
   )
 }
 
-// ── Bridge ──
+// ── Bridge (Funbridge-stijl) ──
 const NIVEAUS = [1, 2, 3, 4, 5, 6, 7] as const
-const KLEUREN = [
-  { sym: '♣', css: '' },
-  { sym: '♦', css: 'kr-rood' },
-  { sym: '♥', css: 'kr-rood' },
-  { sym: '♠', css: '' },
-  { sym: 'SA', css: 'kr-sa' },
+const BIED_KLEUREN = [
+  { sym: '♣', key: 'k' },
+  { sym: '♦', key: 'r' },
+  { sym: '♥', key: 'h' },
+  { sym: '♠', key: 's' },
+  { sym: 'SA', key: 'sa' },
 ] as const
+
+function kaartLabel(code: string): string {
+  switch (code) {
+    case 'A': return 'A'
+    case 'H': return 'K'
+    case 'V': return 'Q'
+    case 'B': return 'J'
+    default: return code
+  }
+}
+
+function Kaart({ waarde, kleur }: { waarde: string; kleur: 'S' | 'H' | 'R' | 'K' }) {
+  const suitMap = { S: '♠', H: '♥', R: '♦', K: '♣' }
+  const isRood = kleur === 'H' || kleur === 'R'
+  return (
+    <div className={`fb-kaart${isRood ? ' rood' : ''}`}>
+      <span className="fb-kaart-waarde">{kaartLabel(waarde)}</span>
+      <span className="fb-kaart-suit">{suitMap[kleur]}</span>
+    </div>
+  )
+}
+
+function KaartenFan({ hand }: { hand: [string, string, string, string] }) {
+  const suits: Array<'S' | 'H' | 'R' | 'K'> = ['S', 'H', 'R', 'K']
+  const kaarten: Array<{ waarde: string; kleur: 'S' | 'H' | 'R' | 'K' }> = []
+  hand.forEach((suitStr, i) => {
+    suitStr.split(' ').filter(Boolean).forEach((w) => {
+      kaarten.push({ waarde: w, kleur: suits[i] })
+    })
+  })
+  const totaal = kaarten.length
+  return (
+    <div className="fb-fan">
+      {kaarten.map((k, i) => {
+        const mid = (totaal - 1) / 2
+        const angle = (i - mid) * 3.5
+        const yOff = Math.pow(Math.abs(i - mid), 1.4) * 1.5
+        return (
+          <div
+            key={`${k.kleur}${k.waarde}`}
+            className="fb-fan-slot"
+            style={{ transform: `rotate(${angle}deg) translateY(${yOff}px)` }}
+          >
+            <Kaart waarde={k.waarde} kleur={k.kleur} />
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 function BiedBox({ onBied, uitgeschakeld }: { onBied: (bod: string) => void; uitgeschakeld: boolean }) {
   return (
-    <div className="kr-biedbox">
-      <div className="kr-biedbox-grid">
+    <div className="fb-biedbox">
+      <div className="fb-biedbox-grid">
         {NIVEAUS.map((n) =>
-          KLEUREN.map((k) => {
+          BIED_KLEUREN.map((k) => {
             const bod = `${n}${k.sym}`
             return (
               <button
                 key={bod}
                 type="button"
-                className={`kr-bod ${k.css}`}
+                className={`fb-bod fb-bod-${k.key}`}
                 disabled={uitgeschakeld}
                 onClick={() => onBied(bod)}
               >
-                {n}<span className={k.css}>{k.sym}</span>
+                <span className="fb-bod-n">{n}</span>
+                <span className="fb-bod-sym">{k.sym}</span>
               </button>
             )
           }),
         )}
       </div>
-      <div className="kr-biedbox-extra">
-        <button type="button" className="kr-bod kr-bod-pas" disabled={uitgeschakeld} onClick={() => onBied('pas')}>Pas</button>
-        <button type="button" className="kr-bod kr-bod-dbl" disabled={uitgeschakeld} onClick={() => onBied('doubleer')}>Doubleer</button>
-      </div>
-    </div>
-  )
-}
-
-function BridgeKaarten({ hand }: { hand: [string, string, string, string] }) {
-  return (
-    <div className="kr-hand">
-      <div className="kr-hand-rij">
-        <span className="kr-suit">♠</span>
-        <span className="kr-kaarten">{hand[0]}</span>
-      </div>
-      <div className="kr-hand-rij kr-rood">
-        <span className="kr-suit">♥</span>
-        <span className="kr-kaarten">{hand[1]}</span>
-      </div>
-      <div className="kr-hand-rij kr-rood">
-        <span className="kr-suit">♦</span>
-        <span className="kr-kaarten">{hand[2]}</span>
-      </div>
-      <div className="kr-hand-rij">
-        <span className="kr-suit">♣</span>
-        <span className="kr-kaarten">{hand[3]}</span>
+      <div className="fb-biedbox-extra">
+        <button type="button" className="fb-bod fb-bod-pas" disabled={uitgeschakeld} onClick={() => onBied('pas')}>PAS</button>
+        <button type="button" className="fb-bod fb-bod-x" disabled={uitgeschakeld} onClick={() => onBied('doubleer')}>X</button>
+        <button type="button" className="fb-bod fb-bod-xx" disabled={uitgeschakeld} onClick={() => onBied('redoubleer')}>XX</button>
       </div>
     </div>
   )
@@ -280,33 +309,26 @@ function BridgeRonde({ scenario, nummer }: { scenario: AntwoordScenario; nummer:
   }, [gekozen])
 
   return (
-    <div className={`kr-bridge-ronde${gekozen ? (isGoed ? ' goed' : ' fout') : ''}`}>
-      <div className="kr-bridge-ronde-kop">
-        <span className="kr-bridge-nr">Ronde {nummer}</span>
-        <span className="kr-bridge-opening">Partner opent <strong>{scenario.opening}</strong></span>
-        <span className="kr-bridge-hcp">{scenario.hcp} HCP</span>
-      </div>
+    <div className={`fb-ronde${gekozen ? (isGoed ? ' fb-goed' : ' fb-fout') : ''}`}>
+      <div className="fb-tafel">
+        <div className="fb-tafel-info">
+          <span className="fb-ronde-nr">Ronde {nummer}</span>
+          <span className="fb-opening">Partner (N) opent <strong>{scenario.opening}</strong></span>
+          <span className="fb-hcp">ZUID — {scenario.hcp} HCP</span>
+        </div>
 
-      <div className="kr-bridge-inhoud">
-        <BridgeKaarten hand={scenario.hand} />
+        <KaartenFan hand={scenario.hand} />
 
         {!gekozen ? (
-          <div className="kr-bridge-bied">
-            <p className="kr-bridge-vraag">Wat bied jij?</p>
-            <BiedBox onBied={bied} uitgeschakeld={false} />
-          </div>
+          <BiedBox onBied={bied} uitgeschakeld={false} />
         ) : (
-          <div className="kr-bridge-resultaat">
-            <div className={`kr-bridge-feedback ${isGoed ? 'goed' : 'fout'}`}>
-              {isGoed ? (
-                <p className="kr-bridge-verdict">Goed! <strong>{juist}</strong> is het juiste bod.</p>
-              ) : (
-                <p className="kr-bridge-verdict">
-                  Jij bood <strong>{gekozen}</strong> — het juiste bod is <strong>{juist}</strong>.
-                </p>
-              )}
-              <p className="kr-bridge-uitleg">{scenario.uitleg}</p>
-            </div>
+          <div className={`fb-feedback ${isGoed ? 'goed' : 'fout'}`}>
+            {isGoed ? (
+              <p className="fb-verdict"><span className="fb-check">&#10003;</span> Goed! <strong>{juist}</strong></p>
+            ) : (
+              <p className="fb-verdict"><span className="fb-cross">&#10007;</span> Jij: <strong>{gekozen}</strong> — juist: <strong>{juist}</strong></p>
+            )}
+            <p className="fb-uitleg">{scenario.uitleg}</p>
           </div>
         )}
       </div>
@@ -316,8 +338,7 @@ function BridgeRonde({ scenario, nummer }: { scenario: AntwoordScenario; nummer:
 
 export function BridgeSectie({ bridge }: { bridge: Editie['bridge'] }) {
   return (
-    <div className="kr-bridge">
-      <p className="kr-bridge-intro">Drie biedrondes — bekijk je hand, tel je punten en kies het juiste bod.</p>
+    <div className="fb-bridge">
       {bridge.map((scenario, i) => (
         <BridgeRonde key={i} scenario={scenario} nummer={i + 1} />
       ))}

@@ -199,94 +199,134 @@
 .kr-es { font-family: var(--kr-serif); font-size: 1.7rem; font-weight: 700; color: var(--kr-ink); }
 .kr-nl { font-size: 1rem; color: var(--kr-text); }
 
-/* ── Bridge ── */
+/* ── Bridge (Funbridge-stijl) ── */
 .kr-rood { color: var(--kr-rood); }
-.kr-bridge-intro { color: var(--kr-soft); font-size: 0.9rem; margin-bottom: 1rem; }
+.fb-bridge { display: flex; flex-direction: column; gap: 0.85rem; }
 
-.kr-bridge-ronde {
-  background: var(--kr-paper);
-  border: 1px solid var(--kr-line);
-  border-radius: var(--kr-radius);
-  padding: 1rem 1.1rem;
-  margin-bottom: 0.75rem;
+.fb-ronde { border-radius: 12px; overflow: hidden; }
+
+.fb-tafel {
+  background: #1b5e20;
+  background-image: radial-gradient(ellipse at 50% 80%, #2e7d32 0%, #1b5e20 60%, #0d3b12 100%);
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  box-shadow: inset 0 2px 12px rgba(0,0,0,0.3);
 }
-.kr-bridge-ronde:last-child { margin-bottom: 0; }
-.kr-bridge-ronde.goed { border-color: #3a7d44; background: #f4faf5; }
-.kr-bridge-ronde.fout { border-color: var(--kr-rood); background: #fdf5f4; }
 
-.kr-bridge-ronde-kop {
+.fb-tafel-info {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   flex-wrap: wrap;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--kr-line);
+  width: 100%;
+  justify-content: center;
 }
-.kr-bridge-nr { font-weight: 800; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--kr-accent); }
-.kr-bridge-opening { font-size: 0.95rem; color: var(--kr-text); }
-.kr-bridge-hcp { margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--kr-soft); background: var(--kr-panel); border: 1px solid var(--kr-line); padding: 0.15rem 0.55rem; border-radius: 999px; }
+.fb-ronde-nr {
+  font-weight: 800; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); background: rgba(0,0,0,0.25); padding: 0.2rem 0.6rem; border-radius: 4px;
+}
+.fb-opening { font-size: 0.95rem; color: #fff; font-weight: 600; }
+.fb-opening strong { color: #fdd835; }
+.fb-hcp {
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #fff; background: #c6920a; padding: 0.2rem 0.65rem; border-radius: 4px;
+}
 
-.kr-bridge-inhoud { display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; align-items: start; }
-
-/* Kaarthand */
-.kr-hand {
+/* ── Speelkaarten ── */
+.fb-kaart {
+  width: 38px; height: 54px;
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #c8c8c8;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  background: #1a3a2a;
-  color: #fff;
-  padding: 0.9rem 1rem;
-  border-radius: 8px;
-  min-width: 140px;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
   font-family: var(--kr-serif);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  color: #1a1a2e;
+  flex-shrink: 0;
+  line-height: 1;
 }
-.kr-hand-rij { display: flex; align-items: center; gap: 0.5rem; font-size: 1.05rem; }
-.kr-hand-rij.kr-rood { color: #e84040; }
-.kr-suit { font-size: 1.3rem; width: 1.4rem; text-align: center; flex-shrink: 0; }
-.kr-kaarten { letter-spacing: 0.04em; }
+.fb-kaart.rood { color: #d32f2f; }
+.fb-kaart-waarde { font-size: 0.95rem; font-weight: 800; }
+.fb-kaart-suit { font-size: 0.85rem; }
 
-/* Biedbox */
-.kr-bridge-bied { display: flex; flex-direction: column; gap: 0.5rem; }
-.kr-bridge-vraag { font-weight: 700; font-size: 1rem; color: var(--kr-ink); }
-.kr-biedbox-grid {
+/* Fan-layout */
+.fb-fan {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0.5rem 0 0.2rem;
+}
+.fb-fan-slot {
+  margin-left: -10px;
+  transform-origin: bottom center;
+  transition: transform 0.15s, margin-top 0.15s;
+}
+.fb-fan-slot:first-child { margin-left: 0; }
+.fb-fan-slot:hover {
+  transform: translateY(-10px) !important;
+  z-index: 10;
+}
+
+/* ── Biedbox ── */
+.fb-biedbox { width: 100%; max-width: 340px; }
+.fb-biedbox-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 3px;
+  gap: 2px;
 }
-.kr-bod {
-  padding: 0.35rem 0.25rem;
-  font-size: 0.82rem;
-  font-weight: 700;
-  border: 1px solid var(--kr-line);
-  border-radius: 3px;
-  background: var(--kr-panel);
-  color: var(--kr-ink);
-  text-align: center;
-  transition: background 0.1s, border-color 0.1s, transform 0.1s;
-  line-height: 1.2;
-  cursor: pointer;
+.fb-bod {
+  display: flex; align-items: center; justify-content: center; gap: 1px;
+  padding: 0.38rem 0.15rem;
+  font-size: 0.82rem; font-weight: 800;
+  border: none; border-radius: 3px;
+  text-align: center; cursor: pointer;
+  transition: filter 0.1s, transform 0.1s;
+  line-height: 1;
+  color: #fff;
 }
-.kr-bod:hover:not(:disabled) { background: #e8e4dc; border-color: var(--kr-soft); transform: translateY(-1px); }
-.kr-bod:disabled { opacity: 0.35; cursor: default; }
-.kr-bod .kr-rood { color: var(--kr-rood); }
-.kr-sa { color: var(--kr-accent); font-weight: 800; }
-.kr-biedbox-extra { display: flex; gap: 3px; margin-top: 3px; }
-.kr-bod-pas { flex: 1; background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
-.kr-bod-pas:hover:not(:disabled) { background: #c8e6c9; }
-.kr-bod-dbl { flex: 1; background: #fce4ec; color: #c62828; border-color: #ef9a9a; }
-.kr-bod-dbl:hover:not(:disabled) { background: #f8bbd0; }
+.fb-bod:hover:not(:disabled) { filter: brightness(1.15); transform: scale(1.06); z-index: 2; }
+.fb-bod:active:not(:disabled) { transform: scale(0.96); }
+.fb-bod:disabled { opacity: 0.3; cursor: default; }
+.fb-bod-n { font-size: 0.85rem; }
+.fb-bod-sym { font-size: 0.9rem; }
 
-/* Resultaat */
-.kr-bridge-resultaat { display: flex; flex-direction: column; justify-content: center; }
-.kr-bridge-feedback { padding: 0.8rem 1rem; border-radius: 6px; }
-.kr-bridge-feedback.goed { background: #e8f5e9; }
-.kr-bridge-feedback.fout { background: #fce4ec; }
-.kr-bridge-verdict { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
-.kr-bridge-feedback.goed .kr-bridge-verdict { color: #2e7d32; }
-.kr-bridge-feedback.fout .kr-bridge-verdict { color: #c62828; }
-.kr-bridge-uitleg { font-size: 0.88rem; color: var(--kr-text); line-height: 1.6; }
+/* Kleuren per suit — extra specificity nodig vanwege .kr-app button reset */
+.fb-biedbox .fb-bod-k  { background: #37474f; }
+.fb-biedbox .fb-bod-r  { background: #e65100; }
+.fb-biedbox .fb-bod-h  { background: #c62828; }
+.fb-biedbox .fb-bod-s  { background: #283593; }
+.fb-biedbox .fb-bod-sa { background: #1565c0; }
+
+.fb-biedbox-extra { display: flex; gap: 2px; margin-top: 2px; }
+.fb-biedbox .fb-bod-pas { flex: 2; background: #2e7d32; font-size: 0.85rem; font-weight: 900; letter-spacing: 0.06em; }
+.fb-biedbox .fb-bod-x   { flex: 1; background: #c62828; font-size: 0.9rem; font-weight: 900; }
+.fb-biedbox .fb-bod-xx  { flex: 1; background: #00695c; font-size: 0.82rem; font-weight: 900; }
+
+/* ── Feedback na bod ── */
+.fb-feedback {
+  width: 100%; max-width: 480px;
+  padding: 0.85rem 1rem; border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+.fb-feedback.goed { background: rgba(46,125,50,0.85); color: #fff; }
+.fb-feedback.fout { background: rgba(198,40,40,0.85); color: #fff; }
+.fb-verdict { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+.fb-check { color: #a5d6a7; font-size: 1.1rem; margin-right: 0.3rem; }
+.fb-cross { color: #ef9a9a; font-size: 1.1rem; margin-right: 0.3rem; }
+.fb-uitleg { font-size: 0.85rem; line-height: 1.55; opacity: 0.92; }
+
+/* Goed/fout border glow */
+.fb-ronde.fb-goed .fb-tafel { box-shadow: inset 0 0 0 3px #66bb6a, inset 0 2px 12px rgba(0,0,0,0.3); }
+.fb-ronde.fb-fout .fb-tafel { box-shadow: inset 0 0 0 3px #ef5350, inset 0 2px 12px rgba(0,0,0,0.3); }
 
 /* ── Vogel ── */
 .kr-vogel { display: grid; grid-template-columns: 180px 1fr; gap: 1.2rem; align-items: start; }
@@ -380,12 +420,14 @@
   .kr-rs-label { font-size: 0.78rem; }
   .kr-zwak-lijst li { grid-template-columns: 1fr auto; }
   .kr-zwak-rubriek { display: none; }
-  .kr-bridge-inhoud { grid-template-columns: 1fr; gap: 0.85rem; }
-  .kr-hand { flex-direction: row; gap: 0.8rem; min-width: 0; padding: 0.7rem 0.8rem; flex-wrap: wrap; }
-  .kr-hand-rij { font-size: 0.95rem; }
-  .kr-suit { font-size: 1.15rem; width: 1.2rem; }
-  .kr-biedbox-grid { gap: 2px; }
-  .kr-bod { padding: 0.4rem 0.15rem; font-size: 0.78rem; }
+  .fb-tafel { padding: 0.9rem 0.7rem 1.1rem; gap: 0.8rem; }
+  .fb-kaart { width: 32px; height: 46px; }
+  .fb-kaart-waarde { font-size: 0.82rem; }
+  .fb-kaart-suit { font-size: 0.75rem; }
+  .fb-fan { height: 68px; }
+  .fb-biedbox { max-width: 100%; }
+  .fb-bod { padding: 0.42rem 0.1rem; font-size: 0.78rem; }
+  .fb-bod-pas { font-size: 0.8rem; }
   .kr-stat-tegels { gap: 0.5rem; }
   .kr-tegel { padding: 0.85rem 0.5rem; }
   .kr-tegel-getal { font-size: 1.6rem; }
