@@ -434,3 +434,26 @@
   .kr-tegel-label { font-size: 0.68rem; }
   .kr-archief-lijst { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 }
+
+/* ── Elektronica ── */
+.kr-elektro h3 { font-family: var(--kr-serif); font-size: 1.3rem; margin: 0.2rem 0 0.6rem; }
+.kr-elektro > p { line-height: 1.6; margin: 0 0 0.8rem; }
+.kr-elektro-thema {
+  display: inline-block; margin: 0; padding: 0.15rem 0.55rem; border-radius: 999px;
+  font-size: 0.7rem; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase;
+  color: #8a5a00; background: #fdf1d6; border: 1px solid #ecd49a;
+}
+.kr-elektro .kr-elektro-formule {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 1.05rem; font-weight: 600;
+  color: var(--kr-ink); background: var(--kr-paper); border: 1px solid var(--kr-line);
+  border-left: 3px solid #d39b00; padding: 0.5rem 0.8rem; border-radius: var(--kr-radius);
+  overflow-x: auto; white-space: nowrap;
+}
+.kr-elektro-praktijk {
+  background: #eef4ec; border: 1px solid #c9dcc4; border-radius: var(--kr-radius); padding: 0.6rem 0.8rem;
+}
+.kr-elektro-praktijk-kop {
+  display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: #3a7d44;
+  margin-bottom: 0.2rem;
+}
+.kr-elektro-praktijk p { margin: 0; line-height: 1.55; }

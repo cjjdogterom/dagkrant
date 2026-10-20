@@ -1,6 +1,7 @@
 import type { Vraag } from '../leer/QuizRunner'
 import { shuffle } from '../leer/match'
 import { ANTWOORD_SCENARIOS } from '../bridge/antwoorden'
+import { ELEKTRONICA } from '../elektronica/data'
 import { FLORA } from '../flora/data'
 import { ALLES } from '../geschiedenis/data'
 import { SEINEN } from '../seinen/data'
@@ -86,6 +87,10 @@ function vraagFlora(p: (typeof FLORA)[number]): Vraag {
   return { prompt: (<>Welke {p.type.toLowerCase()} wordt hier beschreven?<span className="kr-quiz-uitleg">{p.beschrijving}</span></>), options: opties, correct: opties.indexOf(p.naam), explain: `${p.naam} (${p.latijn}). ${p.kenmerk}` }
 }
 
+function vraagElektro(l: (typeof ELEKTRONICA)[number]): Vraag {
+  return { prompt: <>{l.vraag}</>, options: [...l.opties], correct: l.goed, explain: `${l.titel}: ${l.uitleg}` }
+}
+
 // Bouw de vraag voor een rubriek + item.
 function vraagVoor(rubriek: string, item: unknown): Vraag | null {
   switch (rubriek) {
@@ -98,6 +103,7 @@ function vraagVoor(rubriek: string, item: unknown): Vraag | null {
     case 'weetje': return vraagWeetje(item as never)
     case 'vogel': return vraagVogel(item as never)
     case 'flora': return vraagFlora(item as never)
+    case 'elektronica': return vraagElektro(item as never)
     default: return null
   }
 }
@@ -113,6 +119,7 @@ function itemVanEditie(e: Editie, rubriek: string): unknown {
     case 'weetje': return e.weetje
     case 'vogel': return e.vogel
     case 'flora': return e.plant
+    case 'elektronica': return e.elektro
     default: return null
   }
 }
@@ -135,6 +142,7 @@ export function zoekItem(itemId: string): { rubriek: string; item: unknown } | n
     case 'weetje': item = WEETJES.find((x) => String(x.id) === key); break
     case 'vogel': item = VOGELS.find((x) => x.id === key); break
     case 'flora': item = FLORA[n]; break
+    case 'elektronica': item = ELEKTRONICA.find((x) => x.id === n); break
     default: return null
   }
   return item ? { rubriek, item } : null
@@ -155,6 +163,7 @@ export function itemLabel(itemId: string): string {
     case 'weetje': return String(it.vraag)
     case 'vogel': return `Vogel — ${it.naam}`
     case 'flora': return `Flora — ${it.naam}`
+    case 'elektronica': return `Elektronica — ${it.titel}`
     default: return itemId
   }
 }

@@ -4,7 +4,7 @@ import { bouwEditie, itemIdVoor, RUBRIEKEN, RUBRIEK_LABEL } from './editie'
 import { bouwHerhaalVragen, bouwVragen, itemLabel, ontleedVraag } from './oefeningen'
 import { datumSleutel, parseDatum } from './rng'
 import {
-  BridgeSectie, EredivisieSectie, FloraSectie, GeschiedenisSectie, LandSectie,
+  BridgeSectie, ElektroSectie, EredivisieSectie, FloraSectie, GeschiedenisSectie, LandSectie,
   NieuwsWeer, SeinSectie, SpaansSectie, VogelSectie, WeetjeSectie,
 } from './secties'
 import { useVoortgang } from './store'
@@ -118,6 +118,9 @@ function EditieView({ datum, tracked = true }: { datum: string; tracked?: boolea
         </RubriekKaart>
         <RubriekKaart rubriek="flora" itemId={ids.flora} label="Flora van de dag" breed toonBeheersing={tracked}>
           <FloraSectie plant={editie.plant} />
+        </RubriekKaart>
+        <RubriekKaart rubriek="elektronica" itemId={ids.elektronica} label="Elektronica — les van de dag" breed toonBeheersing={tracked}>
+          <ElektroSectie les={editie.elektro} />
         </RubriekKaart>
       </div>
 

@@ -3,6 +3,7 @@ import { FLORA, type Plant } from '../flora/data'
 import { ALLES, type HistItem } from '../geschiedenis/data'
 import { SEINEN, type Sein } from '../seinen/data'
 import { ZINNEN, type Zin } from '../spaans/zinnen'
+import { ELEKTRONICA, type ElektroLes } from '../elektronica/data'
 import { eredivisie } from '../voetbal/data/datasets/eredivisie'
 import type { Champion } from '../voetbal/types'
 import { VOGELS, type Vogel } from '../vogels/data'
@@ -24,6 +25,7 @@ export type Editie = {
   weetje: Weetje
   vogel: Vogel
   plant: Plant
+  elektro: ElektroLes
 }
 
 export function bouwEditie(datum: string): Editie {
@@ -38,6 +40,7 @@ export function bouwEditie(datum: string): Editie {
     weetje: kiesVoor(datum, 'weetje', WEETJES),
     vogel: kiesVoor(datum, 'vogel', VOGELS),
     plant: kiesVoor(datum, 'flora', FLORA),
+    elektro: kiesVoor(datum, 'elektronica', ELEKTRONICA),
   }
 }
 
@@ -52,6 +55,7 @@ export const RUBRIEKEN = [
   { id: 'weetje', label: 'Weetje' },
   { id: 'vogel', label: 'Vogel' },
   { id: 'flora', label: 'Flora' },
+  { id: 'elektronica', label: 'Elektronica' },
 ] as const
 
 export const RUBRIEK_LABEL: Record<string, string> = Object.fromEntries(RUBRIEKEN.map((r) => [r.id, r.label]))
@@ -69,6 +73,7 @@ export function itemIdVoor(rubriek: string, e: Editie): string {
     case 'weetje': return `weetje:${e.weetje.id}`
     case 'vogel': return `vogel:${e.vogel.id}`
     case 'flora': return `flora:${FLORA.indexOf(e.plant)}`
+    case 'elektronica': return `elektronica:${e.elektro.id}`
     default: return `${rubriek}:?`
   }
 }
