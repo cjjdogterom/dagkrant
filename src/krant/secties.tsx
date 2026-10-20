@@ -358,11 +358,14 @@ export function WeetjeSectie({ weetje }: { weetje: Editie['weetje'] }) {
 }
 
 // ── Elektronica ──
+import { ElektroSchema } from '../elektronica/schemas'
+
 export function ElektroSectie({ les }: { les: Editie['elektro'] }) {
   return (
     <div className="kr-elektro">
       <p className="kr-elektro-thema">{les.thema}</p>
       <h3>{les.titel}</h3>
+      <ElektroSchema lesId={les.id} />
       <p>{les.uitleg}</p>
       {les.formule && <p className="kr-elektro-formule">{les.formule}</p>}
       <div className="kr-elektro-praktijk">

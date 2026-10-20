@@ -457,3 +457,20 @@
   margin-bottom: 0.2rem;
 }
 .kr-elektro-praktijk p { margin: 0; line-height: 1.55; }
+
+/* Schema / tekening bij elektronica-les */
+.kr-elektro-schema {
+  margin: 0.6rem 0 0.8rem;
+  padding: 0.8rem;
+  background: #fafaf8;
+  border: 1px solid var(--kr-line);
+  border-radius: var(--kr-radius);
+  text-align: center;
+  overflow-x: auto;
+}
+.kr-elektro-schema .kr-esvg {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  color: var(--kr-ink);
+}
